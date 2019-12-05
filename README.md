@@ -1,5 +1,5 @@
-scc_binding
-===========
+ar_os_scc_binding
+-----------------
 
 Enable setting of Security Context Constraints against an Openshift
 Service Account
@@ -11,12 +11,12 @@ Requirements
 Role Variables
 --------------
 
-| Variable          | Description                                 | Default |
-| --------          | -----------                                 | ------- |
-| scc_binding_items | Object defining the SCC Binding (See below) | None    |
+| Variable                | Description                                 | Default |
+| --------                | -----------                                 | ------- |
+| ar_os_scc_binding_items | Object defining the SCC Binding (See below) | None    |
 
 
-The structure of the 'scc_binding_items' is:
+The structure of the 'ar_os_scc_binding_items' is:
 ```
   {
     name: "<the service account name>",
@@ -45,9 +45,9 @@ Example Openshift Applier stanza
     - amqbroker
     - amqic
     post_steps:
-      - role: scc_binding
+      - role: ar_os_scc_binding
         vars:
           tmp_dep_dir: "roles/"
-          scc_binding_items: [{name: 'aspera-sa', namespace: 'dif-dev', scc: 'anyuid'}]
+          ar_os_scc_binding_items: [{name: 'aspera-sa', namespace: 'dif-dev', scc: 'anyuid'}]
 
 ```
