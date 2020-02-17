@@ -1,6 +1,14 @@
 ---
+- set_fact:
+    namespace_clause: ""
+  when: ar_os_scc_binding_namespace is not defined or ar_os_scc_binding_namespace is none
+
+- set_fact:
+    namespace_clause: "-n {{ ar_os_scc_binding_namespace }}"
+  when: ar_os_scc_binding_namespace is defined and ar_os_scc_binding_namespace is not none
+
 - name: Assign SCC to Service Account
-  command: oc adm policy add-scc-to-user {{ ar_os_scc_binding_item.scc }} -z {{ ar_os_scc_binding_item.name }} -n {{ ar_os_scc_binding_item.namespace }}
+  command: oc adm policy add-scc-to-user {{ ar_os_scc_binding_item.scc }} -z {{ ar_os_scc_binding_item.sa_name }} {{ namespace_clause }}
   when: ar_os_scc_binding_item.scc is defined
   with_items: "{{ ar_os_scc_binding_items }}"
   loop_control:
