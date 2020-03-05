@@ -1,0 +1,17 @@
+---
+- name: "Assertions: ar_os_scc_binding"
+  assert:
+    that: "{{ ar_os_scc_binding_assertions }}"
+
+- name: Check if the scc is already bound to the user
+  command: oc get scc {{ ar_os_scc_binding_item.scc }} -o jsonpath='{.users}'
+  register: scc_stat
+  changed_when: false
+
+- name: Setfact for fully quallified service account name
+  set_fact:
+    _ar_os_scc_binding_sa_name: "system:serviceaccount:{{ ar_os_scc_binding_namespace }}:{{ ar_os_scc_binding_item.sa_name }}"
+
+- name: Assign SCC to Service Account
+  command: oc adm policy add-scc-to-user {{ ar_os_scc_binding_item.scc }} -z {{ ar_os_scc_binding_item.sa_name }} -n {{ ar_os_scc_binding_namespace }}
+  when: scc_stat.stdout_lines | length == 0 or _ar_os_scc_binding_sa_name not in scc_stat.stdout_lines[0].split(' ')

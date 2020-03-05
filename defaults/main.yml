@@ -1,3 +1,12 @@
 ---
-ar_os_scc_binding_namespace: null
-ar_os_scc_binding_items: []
+ar_os_scc_binding_assertions: [
+  "ar_os_scc_binding_namespace is defined",
+  "ar_os_scc_binding_namespace is not none",
+  "ar_os_scc_binding_namespace | length",
+  "'scc' in ar_os_scc_binding_item",
+  "ar_os_scc_binding_item.scc is not none",
+  "ar_os_scc_binding_item.scc | length",
+  "'sa_name' in ar_os_scc_binding_item",
+  "ar_os_scc_binding_item.sa_name is not none",
+  "ar_os_scc_binding_item.sa_name | length",
+]
